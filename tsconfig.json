@@ -1,23 +1,27 @@
 {
   "compilerOptions": {
-    "target": "ES2020",                          
-    "module": "CommonJS",                        
-    "rootDir": "src",                            
-    "outDir": "dist",                            
-    "strict": true,                              
-    "esModuleInterop": true,                     
-    "skipLibCheck": true,                        
+    "target": "ES2020",
+    "module": "CommonJS",
+    "rootDir": "src",
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,                   
+    "resolveJsonModule": true,
     "moduleResolution": "node",
-    "noImplicitAny": false,                      
-    "baseUrl": "src",
+    "noImplicitAny": false,
+    "baseUrl": ".",
     "paths": {
-      "@domain/*": ["domain/*"],
-      "@usecases/*": ["usecases/*"],
-      "@adapters/*": ["adapters/*"],
-      "@infra/*": ["infrastructure/*"]
-    }
+      "@domain/*": ["src/domain/*"],
+      "@usecases/*": ["src/usecases/*"],
+      "@adapters/*": ["src/adapters/*"],
+      "@infra/*": ["src/infrastructure/*"]
+    },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ]
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
