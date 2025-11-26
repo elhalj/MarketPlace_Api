@@ -4,7 +4,7 @@ import { IMerchantRepository } from '../../domain/repositories/IMerchantReposito
 import { Address } from '../../domain/value-objects/Address';
 import { Location } from '../../domain/value-objects/Location';
 import { OpeningHours } from '../../domain/value-objects/OpeningHours';
-import { Category } from '../../domain/entities/Category';
+// import { Category } from '../../domain/entities/Category';
 
 export interface CreateRestaurantDTO {
   name: string;

@@ -2,6 +2,18 @@ import { Restaurant } from '../entities/Restaurant';
 import { Location } from '../value-objects/Location';
 import { Category } from '../entities/Category';
 
+interface SearchOptions {
+  query?: string;
+  categories?: string[];
+  location?: Location;
+  radius?: number;
+  rating?: number;
+  page: number;
+  limit: number;
+  sortBy?: 'rating' | 'distance' | 'name';
+  order?: 'asc' | 'desc';
+}
+
 export interface IRestaurantRepository {
   // Create
   create(restaurant: Restaurant): Promise<Restaurant>;
@@ -18,6 +30,8 @@ export interface IRestaurantRepository {
   updateCategories(id: string, categories: Category[]): Promise<Restaurant>;
   updateRating(id: string, rating: number): Promise<Restaurant>;
   
+  // Search
+  search(options: SearchOptions): Promise<{ restaurants: Restaurant[]; total: number }>;
   // Delete
   delete(id: string): Promise<void>;
   

@@ -27,7 +27,7 @@ export class SearchProduct {
   async execute(params: SearchProductDTO): Promise<SearchProductResponse> {
     // Search products with filters
     const { products, total } = await this.productRepository.findByFilters({
-      query: params.query,
+      // query: params.query,
       categories: params.category ? [params.category] : undefined,
       minPrice: params.minPrice,
       maxPrice: params.maxPrice,

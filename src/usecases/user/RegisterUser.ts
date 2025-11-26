@@ -1,13 +1,18 @@
-import { User } from '../../domain/entities/User';
+
 import { IUserRepository } from '../../domain/repositories/IUserRepository';
 import { EmailService } from '../../adaptaters/services/EmailService';
-
+import User from '@domain/entities/User';
+import bcrypt from 'bcryptjs';
+import crypto from 'node:crypto';
 export interface RegisterUserDTO {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
   phone: string;
+  role: 'user' | 'merchant' | 'admin';
+  isVerified: boolean;
+  isActive: boolean;
 }
 
 export class RegisterUser {
@@ -29,14 +34,17 @@ export class RegisterUser {
       throw new Error('Phone number already registered');
     }
 
+    const hashPassword = await bcrypt.hash(data.password, 12)
     // Create new user
     const user = new User(
-      crypto.randomUUID(),
       data.firstName,
       data.lastName,
       data.email,
-      data.password, // Note: Password should be hashed before storage
-      data.phone
+      hashPassword, // Note: Password should be hashed before storage
+      data.role,
+      data.isVerified,
+      data.isActive,
+      crypto.randomUUID()
     );
 
     // Save user

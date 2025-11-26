@@ -1,6 +1,4 @@
 import { Router } from 'express';
-import { authMiddleware } from '../../adaptaters/middlewares/authMiddleware';
-import { validate } from '../../adaptaters/middlewares/validator';
 import { upload } from '../../adaptaters/middlewares/uploadMiddleware';
 
 import { MerchantController } from '../../adaptaters/controllers/MerchantController';
@@ -46,6 +44,8 @@ import { GetRestaurantById } from '../../usecases/restaurant/GetRestaurantById';
 import { SearchRestaurant } from '../../usecases/restaurant/SearchRestaurant';
 import { UpdateLocation } from '../../usecases/restaurant/UpdateLocation';
 import { UpdateRestaurant } from '../../usecases/restaurant/UpdateRestaurant';
+import { authenticate } from '@adaptaters/middlewares/authMiddleware';
+import { validator } from '@adaptaters/middlewares/validator';
 
 const router = Router();
 
@@ -113,42 +113,42 @@ router.post('/auth/forgot-password', validate('email'), userController.forgotPas
 router.post('/auth/reset-password', validate('resetPassword'), userController.resetPassword);
 
 // User routes
-router.get('/users/me', authMiddleware, userController.getProfile);
-router.put('/users/me', authMiddleware, validate('updateProfile'), userController.updateProfile);
+router.get('/users/me', authenticate, userController.getProfile);
+router.put('/users/me', authenticate, validator('updateProfile'), userController.updateProfile);
 
 // Merchant routes
-router.post('/merchants/register', authMiddleware, validate('merchantRegister'), merchantController.register);
-router.get('/merchants/restaurants', authMiddleware, merchantController.getRestaurants);
-router.put('/merchants/profile', authMiddleware, validate('merchantProfile'), merchantController.updateProfile);
-router.patch('/merchants/:id/verify', authMiddleware, merchantController.verify);
+router.post('/merchants/register', authenticate, validator('merchantRegister'), merchantController.register);
+router.get('/merchants/restaurants', authenticate, merchantController.getRestaurants);
+router.put('/merchants/profile', authenticate, validator('merchantProfile'), merchantController.updateProfile);
+router.patch('/merchants/:id/verify', authenticate, merchantController.verify);
 
 // Restaurant routes
-router.post('/restaurants', authMiddleware, validate('createRestaurant'), restaurantController.create);
+router.post('/restaurants', authenticate, validatr('createRestaurant'), restaurantController.create);
 router.get('/restaurants', restaurantController.search);
-router.get('/restaurants/nearby', validate('coordinates'), restaurantController.getNearby);
+router.get('/restaurants/nearby', validator('coordinates'), restaurantController.getNearby);
 router.get('/restaurants/:id', restaurantController.getById);
-router.put('/restaurants/:id', authMiddleware, validate('updateRestaurant'), restaurantController.update);
-router.patch('/restaurants/:id/location', authMiddleware, validate('location'), restaurantController.updateLocation);
-router.delete('/restaurants/:id', authMiddleware, restaurantController.delete);
+router.put('/restaurants/:id', authenticate, validator('updateRestaurant'), restaurantController.update);
+router.patch('/restaurants/:id/location', authenticate, validator('location'), restaurantController.updateLocation);
+router.delete('/restaurants/:id', authenticate, restaurantController.delete);
 
 // Product routes
-router.post('/restaurants/:id/products', authMiddleware, validate('createProduct'), productController.create);
+router.post('/restaurants/:id/products', authenticate, validator('createProduct'), productController.create);
 router.get('/restaurants/:id/products', productController.getByRestaurant);
 router.get('/products/search', productController.search);
-router.put('/products/:id', authMiddleware, validate('updateProduct'), productController.update);
-router.patch('/products/:id/stock', authMiddleware, validate('updateStock'), productController.updateStock);
-router.delete('/products/:id', authMiddleware, productController.delete);
+router.put('/products/:id', authenticate, validator('updateProduct'), productController.update);
+router.patch('/products/:id/stock', authenticate, validator('updateStock'), productController.updateStock);
+router.delete('/products/:id', authenticate, productController.delete);
 
 // Order routes
-router.post('/orders', authMiddleware, validate('createOrder'), orderController.create);
-router.get('/orders/user', authMiddleware, orderController.getUserOrders);
-router.get('/orders/merchant', authMiddleware, orderController.getMerchantOrders);
-router.get('/orders/:id', authMiddleware, orderController.getById);
-router.patch('/orders/:id/status', authMiddleware, validate('updateOrderStatus'), orderController.updateStatus);
+router.post('/orders', authenticate, validator('createOrder'), orderController.create);
+router.get('/orders/user', authenticate, orderController.getUserOrders);
+router.get('/orders/merchant', authenticate, orderController.getMerchantOrders);
+router.get('/orders/:id', authenticate, orderController.getById);
+router.patch('/orders/:id/status', authenticate, validator('updateOrderStatus'), orderController.updateStatus);
 
 // Review routes
-router.post('/restaurants/:id/reviews', authMiddleware, validate('createReview'), reviewController.create);
+router.post('/restaurants/:id/reviews', authenticate, validator('createReview'), reviewController.create);
 router.get('/restaurants/:id/reviews', reviewController.getByRestaurant);
-router.delete('/reviews/:id', authMiddleware, reviewController.delete);
+router.delete('/reviews/:id', authenticate, reviewController.delete);
 
 export default router;

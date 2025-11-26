@@ -1,7 +1,7 @@
+import { connectToDatabase } from './infrastructure/database/mongoose/connection';
+import { connectToRedis } from './infrastructure/database/redis/connection';
+import app from './infrastructure/server/app';
 import 'dotenv/config';
-import { connectToDatabase } from '@infra/database/mongoose/connection';
-import { connectToRedis } from '@infra/database/redis/connection';
-import app from '@infra/server/app';
 
 const PORT = process.env.PORT || 3000;
 

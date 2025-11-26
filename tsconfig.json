@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-<<<<<<< HEAD
     "target": "ES2020",
     "module": "CommonJS",
     "rootDir": "src",
@@ -8,16 +7,6 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-=======
-    "target": "ES2020",                          
-    "module": "ES2020",                        
-    "rootDir": "src",                            
-    "outDir": "dist",                            
-    "strict": true,                              
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,                     
-    "skipLibCheck": true,                        
->>>>>>> 3d886706fd4d8f64ff3d6f09fbc9e57f62431308
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "moduleResolution": "node",
@@ -26,8 +15,8 @@
     "paths": {
       "@domain/*": ["src/domain/*"],
       "@usecases/*": ["src/usecases/*"],
-      "@adapters/*": ["src/adapters/*"],
-      "@infra/*": ["src/infrastructure/*"]
+      "@adaptaters/*": ["src/adaptaters/*"],
+      "@infrastructure/*": ["src/infrastructure/*"]
     },
     "typeRoots": [
       "./node_modules/@types",

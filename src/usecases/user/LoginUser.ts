@@ -1,6 +1,7 @@
-import { User } from '../../domain/entities/User';
+
 import { IUserRepository } from '../../domain/repositories/IUserRepository';
 import { AuthService } from '../../adaptaters/services/AuthService';
+import User from '@domain/entities/User';
 
 export interface LoginUserDTO {
   email: string;

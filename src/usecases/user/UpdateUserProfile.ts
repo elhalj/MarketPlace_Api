@@ -1,4 +1,5 @@
-import { User } from '../../domain/entities/User';
+
+import User from '@domain/entities/User';
 import { IUserRepository } from '../../domain/repositories/IUserRepository';
 
 export interface UpdateUserProfileDTO {
