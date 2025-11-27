@@ -41,7 +41,7 @@ export class RegisterMerchant {
     private readonly emailService: EmailService,
     private readonly storageService: StorageService,
     private readonly authService: AuthService
-  ) {}
+  ) { }
 
   async execute(data: RegisterMerchantDTO): Promise<RegisterMerchantResponse> {
     // Check if email already exists
@@ -80,15 +80,14 @@ export class RegisterMerchant {
 
     // Upload documents
     const documentUrls = await Promise.all(
-      data.documents.map(doc => 
-        this.storageService.uploadDocument(
-          'merchants',
-          merchantId,
-          doc.file,
-          doc.name,
-          doc.mimeType
-        )
-      )
+      data.documents.map(doc => {
+        const fileObject = {
+          buffer: doc.file,
+          originalname: doc.name,
+          mimetype: doc.mimeType
+        } as any;
+        return this.storageService.uploadFile(fileObject);
+      })
     );
 
     // Create merchant
@@ -124,8 +123,6 @@ export class RegisterMerchant {
       accessToken,
       refreshToken
     };
-    );
 
-    return savedMerchant;
   }
 }
