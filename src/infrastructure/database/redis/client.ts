@@ -50,9 +50,6 @@ export class RedisClient {
       throw error;
     }
   }
-}
-
-export const connectToRedis = RedisClient.connect;
 
   // Cache operations
   async set(key: string, value: string, ttl?: number): Promise<void> {
@@ -137,8 +134,7 @@ export const connectToRedis = RedisClient.connect;
     await this.subscriber.unsubscribe(channel);
   }
 
-  // Transaction support
-  async multi(): Promise<Redis.ChainableCommander> {
+  async multi(): Promise<any> {
     return this.client.multi();
   }
 
@@ -180,22 +176,7 @@ export const connectToRedis = RedisClient.connect;
     return acquired === 'OK';
   }
 
-  async releaseLock(lockKey: string, lockValue: string): Promise<boolean> {
-    const script = `
-      if redis.call("get", KEYS[1]) == ARGV[1] then
-        return redis.call("del", KEYS[1])
-      else
-        return 0
-      end
-    `;
-    const result = await this.client.eval(script, 1, lockKey, lockValue);
-    return result === 1;
-  }
 }
 
+export const connectToRedis = RedisClient.connect;
 export const redisClient = RedisClient.getInstance();
-});
-
-redisClient.on('error', (error) => {
-  console.error('Redis connection error:', error);
-});
